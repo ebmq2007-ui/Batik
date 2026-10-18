@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مهمة فنانة الباتيك</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f0f7;--card:#fff;--ink:#1d2147;--sub:#5e6388;--line:#dcdaea;--acc:#2f3f9e;--accbg:#e7e9fb;--on:#fff;--err:#a4262c;--ok:#17653d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12142b;--card:#1b1e3d;--ink:#eceefe;--sub:#a3a8d0;--line:#323765;--acc:#8f9dff;--accbg:#262b5c;--on:#12142b;--err:#ff9aa0;--ok:#7be0a6}}
+:root[data-theme="dark"]{--bg:#12142b;--card:#1b1e3d;--ink:#eceefe;--sub:#a3a8d0;--line:#323765;--acc:#8f9dff;--accbg:#262b5c;--on:#12142b;--err:#ff9aa0;--ok:#7be0a6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,Tahoma,Arial,sans-serif;line-height:1.7}
+.wrap{max-width:1000px;margin:auto;padding:14px 12px 32px}
+header{background:#1d2147;color:#fff;border-radius:20px;padding:20px 22px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;inset:auto auto -40px -30px;width:150px;height:150px;border-radius:50%;border:14px solid #d8a93c66;box-shadow:0 0 0 14px #8f9dff22}
+h1{margin:0 0 4px;font-size:clamp(23px,5.5vw,34px);font-weight:800}
+header p{margin:0;opacity:.88;font-size:14px;max-width:48ch}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:14px 0}
+.steps span{border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:6px 2px;font-size:12px;text-align:center}
+.steps span.on{border-color:var(--acc);background:var(--accbg);font-weight:800}
+.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+canvas#art{display:block;width:100%;height:auto;border-radius:3px;touch-action:none}.frame{padding:12px;border-radius:12px;background:linear-gradient(135deg,#b07a42,#7a4d24 45%,#a8723c);box-shadow:inset 0 0 0 2px #0003,0 6px 14px #0003}
+.msg{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--accbg);font-size:14px;white-space:pre-line}
+.msg.e{color:var(--err)}.msg.s{color:var(--ok)}
+.panel{display:none}.panel.on{display:block}
+h2{font-size:17px;margin:0 0 8px;font-weight:800}
+p{margin:0 0 10px;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip,.btn{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 11px;font:inherit;font-size:14px;cursor:pointer}
+.chip.on{border-color:var(--acc);background:var(--accbg);font-weight:800}
+.btn.main{background:var(--acc);color:var(--on);border-color:var(--acc);font-weight:800;width:100%;padding:12px}
+.btn:disabled{opacity:.5;cursor:default}
+select,input[type=text],textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;margin-bottom:8px}
+label{font-weight:500;font-size:14px;display:block;margin-bottom:3px}
+.cols{display:flex;gap:8px;margin-bottom:6px}
+input[type=color]{flex:1;min-width:0;height:48px;border:1px solid var(--line);border-radius:10px;padding:2px;background:var(--card)}
+.row2{display:flex;gap:8px;margin-bottom:8px}.row2>*{flex:1;min-width:0}
+.nav{display:flex;gap:8px;margin-top:12px}.nav .btn{flex:1}
+.small{font-size:12px;color:var(--sub);margin:10px 0 0;text-align:center}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>مهمة فنانة الباتيك</h1><p>ثلاث محطات تتخذين فيها قراراتك الفنية وتكتشفين نتائجها، وتنتهي ببطاقة إنجاز باسمك.</p></header>
+<div class="steps" id="steps"><span>البداية</span><span>١ الألوان</span><span>٢ التصميم</span><span>٣ التقنيات</span><span>البطاقة</span></div>
+<div class="grid">
+<div class="card"><div class="frame"><canvas id="art" width="640" height="480" role="img" aria-label="قماش باتيك افتراضي تتغير صورته مع كل محطة"></canvas></div><div class="msg" id="msg" aria-live="polite"></div></div>
+<div>
+<div class="card">
+<div class="panel" id="p0"><h2>تكليف من دار الأزياء</h2><p>تريد الدار قماشًا معاصرًا مستوحى من الباتيك. ستصمّمين ألوانه وزخرفته، ثم تختبرين تقنيات الباتيك وتكتشفين كيف تغيّر النتيجة.</p>
+<div class="row2"><div><label for="nm">اسم الفنانة</label><input type="text" id="nm" maxlength="60" autocomplete="name"></div><div><label for="sec">الفصل</label><input type="text" id="sec" maxlength="20"></div></div></div>
+<div class="panel" id="p1"><h2>مختبر الألوان</h2><p>اختاري ثلاثة ألوان بنفسك، وراقبي القماش وما يحدث عند تداخلها.</p>
+<div class="cols"><input type="color" id="c0" value="#d94f30" aria-label="اللون الأول"><input type="color" id="c1" value="#2fb6a8" aria-label="اللون الثاني"><input type="color" id="c2" value="#e8c13a" aria-label="اللون الثالث"></div>
+<div class="msg" id="hd"></div></div>
+<div class="panel" id="p2"><h2>استوديو التصميم المعاصر</h2>
+<div class="chips" id="tools"><button class="chip on" data-t="brush">🖌 قلم الشمع</button><button class="chip" data-t="flower">✿ زهرة</button><button class="chip" data-t="diamond">◇ معين</button><button class="chip" data-t="leaf">🍃 ورقة</button><button class="chip" data-t="dots">⁘ نقاط</button></div>
+<label for="sym">التماثل</label><select id="sym"><option value="mirror">مرآة أفقية</option><option value="quad">رباعي التماثل</option><option value="none">بدون تماثل</option></select>
+<div class="row2"><button class="btn" id="undo">↶ تراجع</button><button class="btn" id="clear">مسح الكل</button></div>
+<button class="btn" id="tmpl" style="width:100%">ابدئي من نموذج جاهز وعدّليه</button></div>
+<div class="panel" id="p3"><h2>تحدي تقنيات الباتيك</h2><p>اختاري تقنية ونفّذيها على تصميمك بألوانك، ثم جرّبي تقنية أخرى وقارني.</p>
+<div class="chips" id="techs"><button class="chip on" data-k="resist">العزل</button><button class="chip" data-k="dot">التنقيط</button><button class="chip" data-k="crackle">التكسير</button></div>
+<button class="btn main" id="run">نفّذي التقنية</button><div class="msg" id="td" style="display:none"></div>
+<div id="qs" style="display:none;margin-top:10px"><label for="q">ما أثر تقنيتك الأخيرة في النتيجة؟</label><select id="q"></select>
+<label for="why">لماذا اخترتِ هذه الألوان وهذه التقنية؟</label><textarea id="why" maxlength="160" rows="3"></textarea></div></div>
+<div class="panel" id="p4"><h2>بطاقة الإنجاز</h2><div class="msg" id="sm" style="margin-bottom:10px"></div><label>اختاري المنتج الذي ستعرضه الدار بتصميمك</label><div class="chips"><button class="chip on" data-pr="scarf">🧣 وشاح</button><button class="chip" data-pr="bag">👜 حقيبة قماشية</button><button class="chip" data-pr="cush">🛋 وسادة</button></div><button class="btn main" id="save">⬇ حفظ البطاقة كصورة PNG</button></div>
+</div>
+<div class="nav"><button class="btn" id="prev">السابق</button><button class="btn main" id="next" style="width:auto;flex:1">التالي</button></div>
+</div></div>
+<p class="small">لا تُرسل أي بيانات إلى خادم. تحفظ الطالبة البطاقة على جهازها ثم ترفعها بنفسها في مدرستي.</p>
+</div>
+<script>
+(()=>{
+const W=640,H=480,$=id=>document.getElementById(id),cv=$('art'),ctx=cv.getContext('2d');
+const mk=()=>{const c=document.createElement('canvas');c.width=W;c.height=H;return c};
+const wax=mk(),wx=wax.getContext('2d'),wk=mk(),kx=wk.getContext('2d'),tint=mk(),tn=tint.getContext('2d'),tmp=mk(),tx=tmp.getContext('2d'),cr=mk(),cx2=cr.getContext('2d'),weave=mk();
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let st=0,tool='brush',tk='resist',ta=null,rm=0,busy=false,bl=[],hist=[],last=null;const tried=new Set();
+const KN={mono:'أحادية',analogous:'متجاورة',complementary:'متكاملة',triadic:'ثلاثية'};
+const KD={mono:'لون واحد بدرجات مختلفة: هدوء وأناقة.',analogous:'ألوان متجاورة على الدولاب: انسجام وهدوء.',complementary:'لونان متقابلان: تباين قوي وحيوية.',triadic:'ثلاثة ألوان متباعدة بالتساوي: تنوع متوازن.'};
+const TN={resist:'العزل',dot:'التنقيط',crackle:'التكسير'};
+const T={resist:'العزل: غطّى الشمع أجزاء من القماش فلم تصلها الصبغة، فبقيت بلون القماش الفاتح.',dot:'التنقيط: وضعنا نقاط شمع صغيرة منتظمة فظهرت نقاطًا فاتحة تعطي السطح ملمسًا زخرفيًا.',crackle:'التكسير: تشقق الشمع السميك فتسللت الصبغة في شقوقه ورسمت شبكة خطوط رفيعة.'};
+const E={resist:'مساحات وخطوط نظيفة بلون القماش حيث غطّاه الشمع',dot:'نقاط فاتحة صغيرة منتظمة تعطي التصميم ملمسًا',crackle:'شبكة خطوط رفيعة ملونة تسللت من شقوق الشمع'};
+const MSG=['مرحبًا يا فنانة! كل قرار تتخذينه سيغيّر النتيجة على القماش.','المحطة ١ – اختاري ألوانك بنفسك وراقبي كيف تتصرف على القماش.','المحطة ٢ – ارسمي زخرفتك بالشمع بلمس الشاشة، أو ابدئي من نموذج وعدّليه.','المحطة ٣ – جرّبي تقنيتين على الأقل وقارني بين نتيجتيهما.','🎉 دار الأزياء تعرض تصميمك! بدّلي المنتج لترين قماشك كأنه حقيقي، ثم احفظي البطاقة.'];
+const say=(t,k)=>{const m=$('msg');m.textContent=t;m.className='msg'+(k?' '+k:'')};
+const hsl=(a,al=1)=>`hsla(${(a[0]+360)%360},${a[1]}%,${a[2]}%,${al})`;
+function h2h(x){const r=parseInt(x.slice(1,3),16)/255,g=parseInt(x.slice(3,5),16)/255,b=parseInt(x.slice(5,7),16)/255,M=Math.max(r,g,b),m=Math.min(r,g,b),l=(M+m)/2,d=M-m;let h=0,s=0;if(d){s=d/(1-Math.abs(2*l-1));h=(M===r?((g-b)/d)%6:M===g?(b-r)/d+2:(r-g)/d+4)*60}return[(h+360)%360,Math.round(s*100),Math.round(l*100)]}
+const pal=()=>[0,1,2].map(i=>h2h($('c'+i).value));
+const dd=(p,q)=>{const d=Math.abs(p-q);return Math.min(d,360-d)};
+const dsl=()=>{const a=pal().map(x=>x[0]);return[dd(a[0],a[1]),dd(a[0],a[2]),dd(a[1],a[2])]};
+function cls(){const ds=dsl(),m=Math.max(...ds);return m<=14?'mono':m<=70?'analogous':ds.every(d=>Math.abs(d-120)<=25)?'triadic':m>=155?'complementary':null}
+{const g=weave.getContext('2d');g.fillStyle='#f4ecd9';g.fillRect(0,0,W,H);for(let y=0;y<H;y+=4){g.strokeStyle=`rgba(90,70,40,${.04+.04*((y/4)%2)})`;g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}for(let x=0;x<W;x+=4){g.strokeStyle=`rgba(90,70,40,${.04+.04*((x/4)%2)})`;g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke()}}
+const tex=mk(),dz=mk();let pr='scarf';
+{const g=tex.getContext('2d');for(let y=0;y<H;y+=4){g.fillStyle=`rgba(0,0,0,${.05+.07*((y/4)%2)})`;g.fillRect(0,y,W,1)}for(let x=0;x<W;x+=4){g.fillStyle=`rgba(0,0,0,${.05+.07*((x/4)%2)})`;g.fillRect(x,0,1,H)}for(let i=0;i<70;i++){const x=Math.random()*W,y=Math.random()*H,r=30+Math.random()*60,gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,'rgba(0,0,0,.1)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(x-r,y-r,2*r,2*r)}}
+const LT={mono:'سيدة الهدوء الراقي',analogous:'ساحرة الانسجام',complementary:'ملكة التباين الجريء',triadic:'فنانة الألوان المرحة'};
+const QT={resist:'«خطوطك النظيفة تبدو كأن خبيرة رسمتها!»',dot:'«هذه النقاط تمنح القماش حياة، سنعرضه في الواجهة!»',crackle:'«تشققات الشمع هنا فن لا يتكرر، كل قطعة فريدة!»'};
+function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+function mock(){const g=ctx,b=g.createLinearGradient(0,0,0,H);b.addColorStop(0,'#f0e8da');b.addColorStop(.8,'#d8cbb3');g.fillStyle=b;g.fillRect(0,0,W,H);g.fillStyle='#b8a285';g.fillRect(0,405,W,75);g.fillStyle='rgba(0,0,0,.08)';g.fillRect(0,405,W,6);
+const pt=g.createPattern(dz,'repeat');if(pt.setTransform)pt.setTransform(new DOMMatrix().scale(pr==='scarf'?.5:.45));
+const sh=(x,y,w,h)=>{const s=g.createLinearGradient(x,y,x+w,y);s.addColorStop(0,'rgba(0,0,0,.22)');s.addColorStop(.3,'rgba(255,255,255,.14)');s.addColorStop(.55,'rgba(0,0,0,.14)');s.addColorStop(.8,'rgba(255,255,255,.1)');s.addColorStop(1,'rgba(0,0,0,.24)');g.fillStyle=s;g.fillRect(x,y,w,h)};
+const P={scarf:()=>{g.beginPath();g.moveTo(190,56);g.lineTo(450,56);g.lineTo(450,385);for(let x=450;x>=190;x-=10)g.lineTo(x,395+Math.sin(x/16)*8);g.closePath()},bag:()=>rr(g,190,190,260,230,14),cush:()=>rr(g,170,110,300,300,46)};
+if(pr==='bag'){g.lineWidth=14;g.strokeStyle='#e9dfc9';g.lineCap='round';g.beginPath();g.moveTo(245,200);g.bezierCurveTo(245,80,395,80,395,200);g.stroke()}
+g.save();g.shadowColor='rgba(0,0,0,.35)';g.shadowBlur=26;g.shadowOffsetY=16;P[pr]();g.fillStyle='#fff';g.fill();g.restore();P[pr]();g.fillStyle=pt;g.fill();
+g.save();P[pr]();g.clip();if(pr==='cush'){const r=g.createRadialGradient(320,240,20,320,260,230);r.addColorStop(0,'rgba(255,255,255,.2)');r.addColorStop(1,'rgba(0,0,0,.32)');g.fillStyle=r;g.fillRect(170,110,300,300)}else if(pr==='bag')sh(190,190,260,230);else{sh(190,56,130,350);sh(320,56,130,350)}g.restore();
+if(pr==='scarf'){g.fillStyle='#6b4220';g.fillRect(150,44,340,12);g.beginPath();g.arc(150,50,9,0,6.29);g.arc(490,50,9,0,6.29);g.fill()}}
+function conf(){if(RM)return;const c=pal(),ps=Array.from({length:60},()=>({x:Math.random()*W,y:-Math.random()*H,v:2+Math.random()*3,r:3+Math.random()*4,i:Math.floor(Math.random()*3),w:Math.random()*6}));let n=0;const f=()=>{if(st!==4)return;render();ps.forEach(p=>{p.y+=p.v;p.x+=Math.sin(p.y/20+p.w);ctx.fillStyle=hsl(c[p.i]);ctx.fillRect(p.x,p.y,p.r*1.6,p.r)});if(++n<150)requestAnimationFrame(f);else render()};requestAnimationFrame(f)}
+document.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{pr=b.dataset.pr;document.querySelectorAll('[data-pr]').forEach(c=>c.classList.toggle('on',c===b));render()});
+// محطة الألوان
+function lab(){const c=pal();ctx.save();ctx.globalCompositeOperation='multiply';ctx.fillStyle=hsl(c[0],.93);ctx.fillRect(40,60,330,230);ctx.fillStyle=hsl(c[1],.93);ctx.fillRect(250,150,350,230);ctx.fillStyle=hsl(c[2],.93);ctx.beginPath();ctx.arc(190,370,90,0,6.29);ctx.fill();ctx.restore()}
+function labFb(){const k=cls();$('hd').textContent=(k?'✓ ألوانك تشكّل تناغمًا '+KN[k]+': '+KD[k]:'لا يظهر تناغم واضح بين ألوانك. قرّبي درجاتها، أو اجعلي لونين متقابلين، أو وزّعيها بالتساوي على الدولاب.')+(Math.max(...dsl())>=150?'\n⚠ عند تداخل لونين متقابلين يتكوّن لون رمادي معكّر. لذلك يعزل الباتيك الألوان عن بعضها بالشمع.':'');render()}
+['c0','c1','c2'].forEach(i=>$(i).oninput=labFb);
+// الشمع والتقنيات
+function mkwk(){kx.globalCompositeOperation='source-over';kx.clearRect(0,0,W,H);kx.drawImage(wax,0,0);if(ta==='crackle')for(let a=0;a<6.28;a+=.785)kx.drawImage(wax,Math.cos(a)*5,Math.sin(a)*5);if(ta==='dot'){kx.fillStyle='#000';for(let y=24,r=0;y<H;y+=32,r++)for(let x=r%2?24:40;x<W;x+=32){kx.beginPath();kx.arc(x,y,4.5,0,6.29);kx.fill()}}}
+function retint(){mkwk();tn.globalCompositeOperation='source-over';tn.clearRect(0,0,W,H);tn.drawImage(wk,0,0);tn.globalCompositeOperation='source-in';tn.fillStyle='#d8a93c';tn.fillRect(0,0,W,H);tn.globalCompositeOperation='source-over'}
+function drawDye(){const c=pal();tx.globalCompositeOperation='source-over';tx.clearRect(0,0,W,H);bl.forEach(({x,y,i,r})=>{r=r+1;const g=tx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,hsl(c[i]));g.addColorStop(.6,hsl(c[i],.92));g.addColorStop(1,hsl(c[i],0));tx.fillStyle=g;tx.fillRect(0,0,W,H)});tx.globalCompositeOperation='destination-out';tx.drawImage(wk,0,0);tx.globalCompositeOperation='source-atop';tx.drawImage(tex,0,0);tx.globalCompositeOperation='source-over'}
+function crk(){const c=pal();cx2.globalCompositeOperation='source-over';cx2.clearRect(0,0,W,H);if(ta!=='crackle')return;cx2.lineCap='round';for(let i=0;i<900;i++){let x=Math.random()*W,y=Math.random()*H,an=Math.random()*6.28;const k=c[i%3];cx2.strokeStyle=hsl([k[0],k[1],Math.max(25,k[2]-12)],.85);cx2.lineWidth=.8+Math.random();cx2.beginPath();cx2.moveTo(x,y);for(let j=0;j<5;j++){an+=(Math.random()-.5)*1.4;x+=Math.cos(an)*(8+Math.random()*14);y+=Math.sin(an)*(8+Math.random()*14);cx2.lineTo(x,y)}cx2.stroke()}cx2.globalCompositeOperation='destination-in';cx2.drawImage(wk,0,0);cx2.globalCompositeOperation='source-over'}
+function render(){if(st===4){mock();return}ctx.drawImage(weave,0,0);if(st===1){lab();return}
+if(bl.length){drawDye();ctx.drawImage(tmp,0,0)}
+const a=1-rm;if(a>0){ctx.globalAlpha=(bl.length?.95:.85)*a;ctx.drawImage(tint,0,0);ctx.globalAlpha=1}
+if(rm>0){ctx.globalAlpha=rm*.9;ctx.drawImage(cr,0,0);ctx.globalAlpha=1}}
+// الرسم
+const tr=(x,y)=>{const sy=$('sym').value,p=[[x,y]];if(sy!=='none')p.push([W-x,y]);if(sy==='quad')p.push([x,H-y],[W-x,H-y]);return p};
+const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height]};
+function stamp(x,y,k){wx.lineWidth=5;wx.lineCap=wx.lineJoin='round';tr(x,y).forEach(([px,py])=>{wx.save();wx.translate(px,py);wx.beginPath();
+if(k==='flower'){for(let j=0;j<6;j++){wx.save();wx.rotate(j*Math.PI/3);wx.moveTo(9,-22);wx.ellipse(0,-22,9,18,0,0,6.29);wx.restore()}wx.stroke();wx.beginPath();wx.arc(0,0,6,0,6.29);wx.fill()}
+else if(k==='diamond'){wx.moveTo(0,-34);wx.lineTo(34,0);wx.lineTo(0,34);wx.lineTo(-34,0);wx.closePath();wx.moveTo(0,-18);wx.lineTo(18,0);wx.lineTo(0,18);wx.lineTo(-18,0);wx.closePath();wx.stroke();wx.beginPath();wx.arc(0,0,5,0,6.29);wx.fill()}
+else if(k==='leaf'){wx.moveTo(0,-36);wx.quadraticCurveTo(30,-8,0,36);wx.quadraticCurveTo(-30,-8,0,-36);wx.moveTo(0,-26);wx.lineTo(0,30);wx.stroke()}
+else{[[-16,10],[16,10],[0,-16]].forEach(([a,b])=>{wx.moveTo(a+8,b);wx.arc(a,b,8,0,6.29)});wx.fill()}
+wx.restore()})}
+const snap=()=>{hist.push(wx.getImageData(0,0,W,H));if(hist.length>12)hist.shift()};
+function seg(a,b){wx.lineWidth=8+Math.random()*3;wx.lineCap='round';const A=tr(...a),B=tr(...b);A.forEach((p,i)=>{wx.beginPath();wx.moveTo(...p);wx.lineTo(...B[i]);wx.stroke()})}
+cv.addEventListener('pointerdown',e=>{if(st!==2||busy)return;e.preventDefault();cv.setPointerCapture(e.pointerId);snap();const p=pos(e);if(tool==='brush'){last=p;seg(p,p)}else stamp(p[0],p[1],tool);retint();render()});
+cv.addEventListener('pointermove',e=>{if(!last||st!==2)return;const p=pos(e);seg(last,p);last=p;retint();render()});
+['pointerup','pointercancel'].forEach(n=>cv.addEventListener(n,()=>last=null));
+$('undo').onclick=()=>{if(hist.length){wx.putImageData(hist.pop(),0,0);retint();render()}};
+$('clear').onclick=()=>{snap();wx.clearRect(0,0,W,H);retint();render()};
+$('tmpl').onclick=()=>{snap();wx.clearRect(0,0,W,H);$('sym').value='mirror';[['flower',130,120],['diamond',130,240],['leaf',130,360],['dots',240,180],['dots',240,300],['flower',320,240]].forEach(([k,x,y])=>stamp(x,y,k));retint();render();say('هذا نموذج جاهز. أضيفي عليه أو امسحي منه حتى يصبح تصميمك أنتِ.')};
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tool=b.dataset.t;document.querySelectorAll('[data-t]').forEach(c=>c.classList.toggle('on',c===b))});
+const cover=()=>{const d=wx.getImageData(0,0,W,H).data;let n=0;for(let i=3;i<d.length;i+=64)if(d[i]>20)n++;return n/(d.length/64)};
+// التقنيات
+document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{tk=b.dataset.k;document.querySelectorAll('[data-k]').forEach(c=>c.classList.toggle('on',c===b))});
+$('run').onclick=()=>{if(busy)return;ta=tk;mkwk();retint();crk();rm=0;bl=[[90,80],[320,60],[560,110],[120,300],[340,260],[560,320],[220,430],[470,430]].map((s,i)=>({x:s[0],y:s[1],i:i%3,r:0}));busy=true;ui();$('td').style.display='none';
+const t0=performance.now(),d=RM?1:3200,f=t=>{const p=Math.min(1,(t-t0)/d);bl.forEach(b=>b.r=210*Math.min(1,p/.6));rm=Math.max(0,(p-.6)/.4);render();if(p<1)requestAnimationFrame(f);else{busy=false;fin()}};requestAnimationFrame(f)};
+function fin(){tried.add(ta);$('td').textContent=T[ta]+(tried.size<2?'\nالآن جرّبي تقنية أخرى لتقارني.':'');$('td').style.display='block';
+const ks=Object.keys(E).sort(()=>Math.random()-.5);$('q').innerHTML='<option value="">اختاري الإجابة</option>'+ks.map(k=>`<option value="${k}">${E[k]}</option>`).join('');$('qs').style.display='block';ui()}
+// التنقل
+function ui(){document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',i===st));document.querySelectorAll('#steps span').forEach((s,i)=>s.classList.toggle('on',i===st));
+$('prev').disabled=busy||st===0;$('next').disabled=busy||st===4;$('run').disabled=busy}
+function go(n){if(busy||n<0||n>4)return;
+if(n>st){
+if(st===0&&!($('nm').value.trim()&&$('sec').value.trim())){say('اكتبي اسمك وفصلك لتبدأ المهمة.','e');return}
+if(st===1&&!cls()){say('لا يظهر تناغم بين ألوانك بعد. عدّليها لتنتقلي إلى المحطة التالية.','e');return}
+if(st===2&&cover()<.012){say('ارسمي مساحة أكبر بالشمع حتى تظهر زخرفتك بوضوح.','e');return}
+if(st===3){if(tried.size<2){say('جرّبي تقنيتين مختلفتين على الأقل لتقارني بينهما.','e');return}if($('q').value!==ta){say('راجعي القماش وقارنيه بالتقنية التي نفّذتِها أخيرًا: '+T[ta],'e');return}if(!$('why').value.trim()){say('اكتبي سبب اختيارك لألوانك وتقنيتك.','e');return}}}
+if(n===4&&st===3)dz.getContext('2d').drawImage(cv,0,0);st=n;if(n<3){bl=[];rm=0;ta=null;tried.clear();retint();$('qs').style.display='none';$('td').style.display='none'}
+if(n===4)$('sm').textContent='الفنانة: '+$('nm').value.trim()+' – '+$('sec').value.trim()+'\nالتناغم: '+KN[cls()]+'\nالتقنية الأخيرة: '+TN[ta]+'\nلقبك: '+LT[cls()]+'\nرأي الدار: '+QT[ta];
+ui();render();say(MSG[n]);if(n===4)conf()}
+$('next').onclick=()=>go(st+1);$('prev').onclick=()=>go(st-1);
+// البطاقة
+function wrap(g,t,x,y,mw,lh,ml){const w=t.split(/\s+/);let l='',n=0;for(const s of w){const c=l?l+' '+s:s;if(g.measureText(c).width>mw&&l){g.fillText(l,x,y+n*lh);n++;l=s;if(n>=ml)return}else l=c}if(l&&n<ml)g.fillText(l,x,y+n*lh)}
+function dl(b,name){const a=document.createElement('a'),u=URL.createObjectURL(b);a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);say('تم تجهيز البطاقة. افتحي التنزيلات ثم ارفعيها في مدرستي.','s')}
+$('save').onclick=()=>{const nm=$('nm').value.trim(),sec=$('sec').value.trim(),why=$('why').value.trim(),c=document.createElement('canvas');c.width=1000;c.height=1400;const g=c.getContext('2d'),F='Tajawal,Tahoma,Arial,sans-serif',K=cls();
+g.fillStyle='#f1f0f7';g.fillRect(0,0,1000,1400);g.fillStyle='#1d2147';g.fillRect(0,0,1000,150);g.direction='rtl';g.textAlign='center';g.fillStyle='#fff';g.font='bold 52px '+F;g.fillText('بطاقة إنجاز: مهمة فنانة الباتيك',500,76);g.font='26px '+F;g.fillText('رأي الدار: '+QT[ta],500,120);
+g.textAlign='right';g.fillStyle='#1d2147';g.font='bold 30px '+F;wrap(g,'الفنانة: '+nm,940,210,880,38,2);g.font='27px '+F;g.fillText('الفصل: '+sec+' | ثاني متوسط',940,285);g.textAlign='left';g.fillText('اللقب: '+LT[K],60,285);g.textAlign='right';
+g.drawImage(cv,60,320,880,660);g.strokeStyle='#1d2147';g.lineWidth=3;g.strokeRect(60,320,880,660);g.drawImage(dz,76,774,240,180);g.strokeStyle='#fff';g.lineWidth=5;g.strokeRect(76,774,240,180);g.strokeStyle='#1d2147';g.lineWidth=3;
+pal().forEach((a,i)=>{g.beginPath();g.arc(910-i*62,1030,24,0,6.29);g.fillStyle=hsl(a);g.fill();g.lineWidth=2;g.stroke()});
+g.fillStyle='#1d2147';g.font='27px '+F;g.fillText('التناغم اللوني: '+KN[K],600,1040);g.fillText('التقنية المختارة: '+TN[ta],940,1100);wrap(g,'أثرها: '+E[ta],940,1145,880,36,2);
+g.font='bold 27px '+F;g.fillText('قراري الفني:',940,1245);g.font='25px '+F;wrap(g,why,940,1288,880,36,3);
+const fn='بطاقة_باتيك_'+nm.replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,'_')+'.png';
+c.toBlob(async b=>{if(!b){say('تعذر إنشاء الصورة في هذا المتصفح.','e');return}let D=null;try{D=window.claude?await window.claude.use('downloads'):null}catch(_){}if(D){try{await D.save({filename:fn,data:b});say('تم حفظ البطاقة. ارفعيها الآن في مدرستي.','s')}catch(er){if(er&&er.code!=='declined')say('تعذر الحفظ، حاولي مرة أخرى.','e')}return}const f=new File([b],fn,{type:'image/png'});
+if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:'بطاقة إنجاز الباتيك'}).then(()=>say('اختاري حفظ الصورة من نافذة المشاركة ثم ارفعيها في مدرستي.','s')).catch(er=>{if(er.name!=='AbortError')dl(b,fn)});else dl(b,fn)},'image/png')};
+retint();labFb();ui();render();say(MSG[0]);
+})();
+</script>
+</body>
+</html>
